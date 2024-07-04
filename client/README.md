@@ -7,7 +7,7 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### Cài thêm redux : 
+### Video 1: Cài thêm redux : 
 
 - npm i redux react-redux redux-persist
 
@@ -47,7 +47,7 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 ```
-- B3: Tạo filer redux.jsx (cùng caaos với main.jsx)
+- B3: Tạo filer redux.jsx (cùng cấp với main.jsx)
 ```jsx
 import rootReducer from "./store/reducers/rootReducer";
 import { persistStore } from "redux-persist"; // có nhiệm vụ giữ lại state
@@ -63,5 +63,43 @@ const reduxStore = () => {
 export default reduxStore;
 ```
 - B4: Ở main.jsx, chỉnh sửa
+
+```jsx
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
+
+// add redux
+import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import reduxStore from './redux.jsx'
+
+const { store, persistor } = reduxStore()
+
+/**
+ * Bọc con App trong PersistGate, nó giúp con react delay việc render UI cho tới store được update
+ */
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+)
+```
+
+### Video 2: Tải thêm thư viện 
+
+- npm i thunk axios react-router-dom
+
+- thunk: xử lý bất đồng bộ giữa react và redux
+
+### Tạo folder tên public và system trong containers
+
+- public: chứa các trang muốn hiển thị cho người dùng mà không cần đăng nhập
+
+- system: chứa các trang có tài khoản mới vào được
+
+### Tạo Router 
 
 
